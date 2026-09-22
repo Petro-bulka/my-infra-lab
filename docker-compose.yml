@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # --- Сервис 1: Веб-сервер Nginx ---
+  nginx:
+    image: nginx:alpine
+    container_name: my-nginx
+    ports:
+      - "80:80"  # Пробрасываем порт 80 из контейнера на порт 80 хоста
+    volumes:
+      # Монтируем нашу папку html внутрь контейнера, чтобы Nginx отдавал наш сайт
+      - ./html:/usr/share/nginx/html:ro
+    networks:
+      - my-network
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  # --- Сервис 2: База данных PostgreSQL ---
+  db:
+    image: postgres:15-alpine
+    container_name: my-postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: mydb
+    volumes:
+      # Создаем именованный volume для данных, чтобы они не пропали при перезапуске
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - my-network
+    restart: unless-stopped
+
+# --- Определяем сеть ---
+networks:
+  my-network:
+    driver: bridge
+
+# --- Определяем volume ---
+volumes:
+  pgdata:
