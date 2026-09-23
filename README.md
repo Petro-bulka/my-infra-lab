@@ -19,7 +19,15 @@
 
 ## Запуск
 ```bash
-git clone https://github.com/Petro-bulka/my-infra-lab
+git clone https://github.com/Petro-bulka/my-infra-lab.git
 cd my-infra-lab
 docker compose up -d
+```
+
+##Переменные окружения
+
+Проект использует `.env` для хранения секретов. Перед запуском скопируйте шаблон:
+
+```bash
+cp .env.example .env
 ```
