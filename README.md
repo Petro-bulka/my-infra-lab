@@ -31,3 +31,13 @@ docker compose up -d
 ```bash
 cp .env.example .env
 ```
+## HTTPS
+
+Проект использует самоподписанный SSL-сертификат. Перед запуском сгенерируйте его:
+
+```bash
+mkdir certs
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout certs/nginx.key -out certs/nginx.crt \
+  -subj "/C=RU/ST=Moscow/L=Moscow/O=MyLab/CN=localhost"
+```

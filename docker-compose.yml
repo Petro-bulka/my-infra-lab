@@ -7,9 +7,12 @@ services:
     container_name: my-nginx
     ports:
       - "80:80"  # Пробрасываем порт 80 из контейнера на порт 80 хоста
+      - "443:443"
     volumes:
       # Монтируем нашу папку html внутрь контейнера, чтобы Nginx отдавал наш сайт
       - ./html:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
     networks:
       - my-network
     depends_on:
