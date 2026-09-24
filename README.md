@@ -23,7 +23,7 @@ git clone https://github.com/Petro-bulka/my-infra-lab.git
 cd my-infra-lab
 docker compose up -d
 ```
-## втоматизация через Ansible
+## Автоматизация через Ansible
 
 Развёртывание проекта автоматизировано через Ansible. Playbook устанавливает Docker, клонирует репозиторий, генерирует SSL-сертификат и запускает стек на чистой Debian.
 
