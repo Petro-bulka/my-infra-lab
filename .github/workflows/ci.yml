@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    name: Validate configuration
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate docker-compose.yml
+        run: docker compose config
+
+      - name: Check nginx.conf syntax
+        run: |
+          docker run --rm -v ${{ github.workspace }}/nginx.conf:/etc/nginx/nginx.conf:ro \
+            nginx:alpine nginx -t
+
+      - name: Install Ansible
+        run: pip install ansible
+
+      - name: Check Ansible playbook syntax
+        run: ansible-playbook --syntax-check ansible/playbook.yml -i ansible/inventory.ini.example

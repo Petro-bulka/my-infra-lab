@@ -1,0 +1,2 @@
+[targets]
+target ansible_host=<IP_ЦЕЛЕВОЙ_VM> ansible_user=<USER>
