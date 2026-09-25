@@ -18,9 +18,18 @@ jobs:
       - name: Validate docker-compose.yml
         run: docker compose config
 
+      - name: Generate test SSL certificate
+        run: |
+          mkdir -p certs
+          openssl req -x509 -nodes -days 1 -newkey rsa:2048 \
+            -keyout certs/nginx.key -out certs/nginx.crt \
+            -subj "/C=RU/ST=Moscow/L=Moscow/O=MyLab/CN=localhost"
+
       - name: Check nginx.conf syntax
         run: |
-          docker run --rm -v ${{ github.workspace }}/nginx.conf:/etc/nginx/nginx.conf:ro \
+          docker run --rm \
+            -v ${{ github.workspace }}/nginx.conf:/etc/nginx/nginx.conf:ro \
+            -v ${{ github.workspace }}/certs:/etc/nginx/certs:ro \
             nginx:alpine nginx -t
 
       - name: Install Ansible
