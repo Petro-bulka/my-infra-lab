@@ -1,6 +1,6 @@
 # My Infra Lab - Nginx + PostgreSQL в Docker
 Учебный проект по развёртыванию веб-инфраструктуры с использованием Docker Compose.
-
+![CI](https://github.com/Petro-bulka/my-infra-lab/actions/workflows/ci.yml/badge.svg)
 
 
 ## Цель проекта
