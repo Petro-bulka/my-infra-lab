@@ -1,0 +1,53 @@
+---
+- name: Deploy My Infra Lab on target VM
+  hosts: targets
+  become: true
+
+  roles:
+    - docker
+
+  tasks:
+    - name: Install git
+      apt:
+        name: git
+        state: present
+        update_cache: yes
+
+    - name: Clone repository
+      git:
+        repo: https://github.com/Petro-bulka/my-infra-lab.git
+        dest: /home/vm2/my-infra-lab
+        version: main
+        force: yes
+      become_user: vm2
+
+    - name: Create .env from .env.example
+      copy:
+        src: /home/vm2/my-infra-lab/.env.example
+        dest: /home/vm2/my-infra-lab/.env
+        remote_src: yes
+        owner: vm2
+        group: vm2
+        mode: '0644'
+
+    - name: Create certs directory
+      file:
+        path: /home/vm2/my-infra-lab/certs
+        state: directory
+        owner: vm2
+        group: vm2
+
+    - name: Generate self-signed SSL certificate
+      command: >
+        openssl req -x509 -nodes -days 365 -newkey rsa:2048
+        -keyout /home/vm2/my-infra-lab/certs/nginx.key
+        -out /home/vm2/my-infra-lab/certs/nginx.crt
+        -subj "/C=RU/ST=Moscow/L=Moscow/O=MyLab/CN=localhost"
+      args:
+        creates: /home/vm2/my-infra-lab/certs/nginx.crt
+
+    - name: Start Docker Compose stack
+      command: docker compose up -d
+      args:
+        chdir: /home/vm2/my-infra-lab
+      become: true
