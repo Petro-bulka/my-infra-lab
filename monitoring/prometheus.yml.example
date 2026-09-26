@@ -10,6 +10,6 @@ scrape_configs:
   - job_name: 'node'
     static_configs:
       - targets:
-          - '192.168.1.98:9100'   # VM1
-          - '192.168.1.124:9100'  # VM2
-          - '192.168.1.99:9100'   # VM3
+          - '<VM1_IP>:9100'   # my-infra-lab
+          - '<VM2_IP>:9100'   # target
+          - '<VM3_IP>:9100'   # monitoring
