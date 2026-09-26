@@ -52,6 +52,15 @@ sudo apt install ansible -y
 | Prometheus | Хранение и агрегация | 9090 |
 | Grafana | Визуализация | 3000 |
 
+### Настройка
+
+Скопируйте шаблон и укажите IP ваших VM:
+
+```bash
+cp monitoring/prometheus.yml.example monitoring/prometheus.yml
+nano monitoring/prometheus.yml
+```
+
 ### Запуск мониторинга
 
 ```bash
