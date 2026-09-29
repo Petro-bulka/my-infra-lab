@@ -97,6 +97,14 @@
 - **Service** `nginx` (NodePort 30080) — внешний доступ.
 - **Service** `postgres` (headless) — внутренний DNS.
 
+### Ingress
+
+Приложение доступно через Ingress (Traefik) по домену `my-infra-lab.local`:
+
+```bash
+kubectl apply -f k8s/ingress-nginx.yaml
+```
+
 ## 🚀 Быстрый старт
 
 ### Вариант 1: Docker Compose (локально)
