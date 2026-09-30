@@ -1,0 +1,7 @@
+Спасибо за установку my-infra-lab!
+
+Проверить статус:
+  kubectl get all -n {{ .Release.Namespace }}
+
+Доступ к приложению:
+  http://{{ .Values.ingress.host }}:30875

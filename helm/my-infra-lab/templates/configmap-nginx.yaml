@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: my-infra-lab
+data:
+  nginx.conf: |
+    events {}
+    http {
+        server {
+            listen 80;
+            server_name _;
+            location / {
+                root  /usr/share/nginx/html;
+                index index.html;
+            }
+        }
+    }
+  index.html: |
+{{ .Values.config.indexHtml | indent 4 }}
