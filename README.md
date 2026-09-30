@@ -104,6 +104,17 @@
 ```bash
 kubectl apply -f k8s/ingress-nginx.yaml
 ```
+## ⎈ Helm
+
+Приложение упаковано в Helm-чарт для параметризованного развёртывания.
+
+### Установка
+
+```bash
+helm install my-infra-lab ./helm/my-infra-lab \
+  --namespace my-infra-lab \
+  --create-namespace
+```
 
 ## 🚀 Быстрый старт
 
