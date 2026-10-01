@@ -115,6 +115,23 @@ helm install my-infra-lab ./helm/my-infra-lab \
   --namespace my-infra-lab \
   --create-namespace
 ```
+## ☸️ Мониторинг Kubernetes
+
+В кластер установлен **kube-prometheus-stack** через Helm:
+
+- Prometheus — сбор метрик K8s (ноды, поды, API-сервер)
+- Grafana — визуализация с дашбордами Kubernetes
+- kube-state-metrics — состояние K8s-объектов
+- Node Exporter — метрики нод
+
+### Установка
+
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm install monitoring prometheus-community/kube-prometheus-stack \
+  -f monitoring-k8s/values.yaml \
+  -n monitoring --create-namespace
+```
 
 ## 🚀 Быстрый старт
 
