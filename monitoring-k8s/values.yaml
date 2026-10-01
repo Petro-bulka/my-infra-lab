@@ -1,0 +1,39 @@
+alertmanager:
+  enabled: false
+
+# Отключаем node-exporter — порт 9100 уже занят старым Node Exporter
+prometheus-node-exporter:
+  enabled: false
+nodeExporter:
+  enabled: false
+
+# Заменяем реестр для kube-state-metrics
+kube-state-metrics:
+  image:
+    repository: xuxiaoweicomcn/kube-state-metrics
+    tag: v2.13.0
+    pullPolicy: IfNotPresent
+
+prometheus:
+  prometheusSpec:
+    retention: 3d
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 400Mi
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+
+grafana:
+  adminPassword: admin
+  service:
+    type: NodePort
+    nodePort: 32000
