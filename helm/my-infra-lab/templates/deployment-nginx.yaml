@@ -22,9 +22,6 @@ spec:
             - name: nginx-config
               mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
-            - name: nginx-config
-              mountPath: /usr/share/nginx/html/index.html
-              subPath: index.html
       volumes:
         - name: nginx-config
           configMap:
