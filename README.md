@@ -71,12 +71,27 @@
 - `roles/docker` — роль для установки Docker на чистую Debian.
 - `inventory.ini` — список управляемых узлов (не коммитится).
 
-### CI (GitHub Actions)
+### CI (Continuous Integration )
 
 При каждом push автоматически проверяется:
 - Валидность `docker-compose.yml` (`docker compose config`).
 - Синтаксис `nginx.conf` (`nginx -t` внутри контейнера).
 - Корректность Ansible playbook (`--syntax-check`).
+
+## 🚀 CD (Continuous Deployment)
+
+При push в `main` GitHub Actions:
+1. Собирает Docker-образ из `Dockerfile`.
+2. Пушит его в GitHub Container Registry (ghcr.io).
+3. K8s Deployment подтягивает новый образ.
+
+### Workflow
+
+- `.github/workflows/cd.yml` — сборка и push образа.
+
+### Образ
+
+https://ghcr.io/petro-bulka/my-infra-lab:latest
 
 ### Мониторинг
 
