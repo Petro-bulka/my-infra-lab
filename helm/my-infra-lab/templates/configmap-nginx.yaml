@@ -6,7 +6,7 @@ metadata:
 data:
   nginx.conf: |
     events {}
-    http {
+    http:
         server {
             listen 80;
             server_name _;
@@ -15,6 +15,3 @@ data:
                 index index.html;
             }
         }
-    }
-  index.html: |
-{{ .Values.config.indexHtml | indent 4 }}
