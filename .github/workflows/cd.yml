@@ -43,3 +43,15 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ steps.repo.outputs.name }}:latest
             ${{ env.REGISTRY }}/${{ steps.repo.outputs.name }}:${{ github.sha }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: self-hosted
+    steps:
+      - name: Deploy to K8s
+        run: |
+          cd /root/my-infra-lab/helm
+          sudo helm upgrade my-infra-lab ./my-infra-lab \
+            -n my-infra-lab \
+            --set nginx.image.tag=${{ github.sha }} \
+            --force
