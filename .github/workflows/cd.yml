@@ -50,8 +50,8 @@ jobs:
     steps:
       - name: Deploy to K8s
         run: |
-          cd /root/my-infra-lab/helm
-          sudo helm upgrade my-infra-lab ./my-infra-lab \
+          cd /home/runner/my-infra-lab/helm
+          helm upgrade my-infra-lab ./my-infra-lab \
             -n my-infra-lab \
             --set nginx.image.tag=${{ github.sha }} \
             --force
