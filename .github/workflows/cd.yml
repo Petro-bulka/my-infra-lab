@@ -54,4 +54,3 @@ jobs:
           helm upgrade my-infra-lab ./my-infra-lab \
             -n my-infra-lab \
             --set nginx.image.tag=${{ github.sha }} \
-            --force
