@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: nginx
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-nginx.yaml") . | sha256sum }}
     spec:
       containers:
         - name: nginx
