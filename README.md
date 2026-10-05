@@ -83,7 +83,12 @@
 При push в `main` GitHub Actions:
 1. Собирает Docker-образ из `Dockerfile`.
 2. Пушит его в GitHub Container Registry (ghcr.io).
-3. K8s Deployment подтягивает новый образ.
+3. Self-hosted runner делает `git pull` + `helm upgrade`.
+4. K8s автоматически пересоздаёт поды (rolling update).
+
+**Триггеры:** `html/**`, `nginx.conf`, `Dockerfile`, `helm/**`.
+
+**Никаких ручных действий** — всё автоматически.
 
 ### Workflow
 
