@@ -22,8 +22,8 @@ spec:
             - containerPort: {{ .Values.nginx.service.port }}
           volumeMounts:
             - name: nginx-config
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
+              mountPath: /etc/nginx/conf.d/
+              readOnly: true
       volumes:
         - name: nginx-config
           configMap:

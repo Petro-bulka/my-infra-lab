@@ -4,15 +4,13 @@ metadata:
   name: nginx-config
   namespace: my-infra-lab
 data:
-  nginx.conf: |          #Тестовый комментарий
-    events {}
-    http {
-        server {
-            listen 80;
-            server_name _;
-            location / {
-                root  /usr/share/nginx/html;
-                index index.html;
-            }
+  default.conf: |
+    server {
+        listen 80;
+        server_name _;
+
+        location / {
+            root  /usr/share/nginx/html;
+            index index.html;
         }
     }
