@@ -4,7 +4,7 @@ metadata:
   name: nginx-config
   namespace: my-infra-lab
 data:
-  nginx.conf: |
+  nginx.conf: |          #Тестовый комментарий
     events {}
     http {
         server {
