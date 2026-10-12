@@ -95,6 +95,31 @@
 2. **Пушится** в ghcr.io с тегами `latest` и `SHA`.
 3. **Self-hosted runner** (на VM1) делает `helm upgrade` — K8s подтягивает новый образ.
 
+## ⎈ GitOps с ArgoCD
+
+Проект использует **GitOps-подход** для деплоя в Kubernetes.
+
+### Как работает
+
+1. **GitHub Actions** собирает Docker-образ и пушит в ghcr.io.
+2. **GitHub Actions** обновляет `values.yaml` — меняет `tag` на **SHA коммита**.
+3. **ArgoCD** следит за Git-репозиторием и **автоматически** синхронизирует кластер.
+4. **K8s** пересоздаёт поды с новым образом (rolling update).
+
+### Преимущества GitOps
+
+- **Git — источник истины.** Всё, что в Git, — в кластере.
+- **Self-Healing.** ArgoCD **восстанавливает** ресурсы, если кто-то изменил их вручную.
+- **Автоматизация.** Никаких ручных `kubectl apply` или `helm upgrade`.
+- **История и откат.** Любое изменение можно откатить через Git.
+
+### Установка ArgoCD
+
+```bash
+helm repo add argo https://argoproj.github.io/argo-helm
+helm install argocd argo/argo-cd -n argocd --create-namespace \
+  --set redis.enabled=false
+```
 ### Мониторинг VM
 
 - **Node Exporter** — на каждой VM, собирает системные метрики на порту `9100`.
