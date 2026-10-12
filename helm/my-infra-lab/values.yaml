@@ -5,7 +5,7 @@ replicaCount: 2
 nginx:
   image:
     repository: ghcr.io/petro-bulka/my-infra-lab
-    tag: latest
+    tag: v2
     pullPolicy: Always
   service:
     type: ClusterIP
