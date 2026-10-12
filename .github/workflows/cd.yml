@@ -12,18 +12,19 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository_owner }}
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -44,3 +45,14 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ steps.repo.outputs.name }}:latest
             ${{ env.REGISTRY }}/${{ steps.repo.outputs.name }}:${{ github.sha }}
+
+      - name: Update image tag in values.yaml
+        run: |
+          cd helm/my-infra-lab
+          sed -i "s|tag: .*|tag: \"${{ github.sha }}\"|" values.yaml
+          cd ../..
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add helm/my-infra-lab/values.yaml
+          git commit -m "Update image tag to ${{ github.sha }}" || echo "No changes"
+          git push
