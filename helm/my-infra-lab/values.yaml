@@ -5,7 +5,7 @@ replicaCount: 2
 nginx:
   image:
     repository: ghcr.io/petro-bulka/my-infra-lab
-    tag: "initial"
+    tag: "f78e581db4453c682acad443018452a0898de9c0"
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -23,7 +23,7 @@ postgresql:
   enabled: true
   image:
     repository: postgres
-    tag: 15-alpine
+    tag: "f78e581db4453c682acad443018452a0898de9c0"
   auth:
     username: admin
     password: secretpassword
