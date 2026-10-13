@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-infra-lab
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Petro-bulka/my-infra-lab.git
+    targetRevision: HEAD
+    path: helm/my-infra-lab
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: my-infra-lab
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
